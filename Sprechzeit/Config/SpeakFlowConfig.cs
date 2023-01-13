@@ -28,10 +28,18 @@ namespace Sprechzeit.Config
             }
             return instance;
         }
-
+        
         public double GetSpeakFlow()
         {
-            return configItems[0].SpeakFlow;
+            double factor = 1.0;
+            for (int i = 0; i < configItems.Count; i++)
+            {
+                factor = factor + (configItems[i].SpeakFlow); // or equivalently r *= mult[i];
+            }
+            factor = factor / Convert.ToDouble(configItems.Count());
+            return factor;
+            
+                
         }
         public void GetConfigValues()
         {
@@ -43,6 +51,7 @@ namespace Sprechzeit.Config
                 configItems.Add(config);
             }
         }
+        
         private class ConfigItem
         {
             public double SpeakFlow;

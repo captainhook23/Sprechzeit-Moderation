@@ -1,46 +1,108 @@
-﻿using System;
+﻿using Sprechzeit.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Sprechzeit.CalculateOperations
 {
     public class CalculateCharsNeeded
     {
-        double m_TimeInMin;
-        double m_TimeInSec;
-        double m_TimeOfSounds;
-        double factor = 13.25; //Config Datei
-        public CalculateCharsNeeded(double timeInMin, double timeInSec, double timeOfSounds)
-        {
-            setTimeInMinutes(timeInMin);
-            setTimeInSeconds(timeInSec);
-            setTimeOfSounds(timeOfSounds);
-        }
-        private void setTimeInMinutes(double value)
-        {
-            m_TimeInMin = value;
-        }
+        private double timeInSec;
+        private double timeInMin;
+        private double timeOfSounds;
+        private double factor = 13.25; //Config Datei
 
-        private void setTimeInSeconds(double value)
+        public CalculateCharsNeededForm charsNeededForm;
+        public CalculateCharsNeeded()
         {
-            m_TimeInSec = value;
         }
-
-        private void setTimeOfSounds(double value)
+        private void GetTextBoxInputs()
         {
-            m_TimeOfSounds = value;
+            double value;
+            if (charsNeededForm.timeInMin != string.Empty && charsNeededForm.timeInSec != string.Empty && charsNeededForm.timeOfSounds != string.Empty)
+            {
+                if (!double.TryParse(charsNeededForm.timeInMin, out value) || !double.TryParse(charsNeededForm.timeInSec, out value) || !double.TryParse(charsNeededForm.timeOfSounds, out value))
+                {
+                    MessageBox.Show("No Digit");
+                }
+                else
+                {
+                    timeInMin = Convert.ToDouble(charsNeededForm.timeInMin);
+                    timeInSec = Convert.ToDouble(charsNeededForm.timeInSec);
+                    timeOfSounds = Convert.ToDouble(charsNeededForm.timeOfSounds);
+                }
+            }
+            else if (charsNeededForm.timeInMin == string.Empty || charsNeededForm.timeInSec == string.Empty || charsNeededForm.timeOfSounds == string.Empty)
+            {
+                if (charsNeededForm.timeInMin == string.Empty)
+                {
+                    timeInMin = 0;
+                    charsNeededForm.timeInMin = Convert.ToString(timeInMin);
+                }
+                if (charsNeededForm.timeInSec == string.Empty)
+                {
+                    timeInSec = 0;
+                    charsNeededForm.timeInSec = Convert.ToString(timeInSec);
+                }
+                if (charsNeededForm.timeOfSounds == string.Empty)
+                {
+                    timeOfSounds = 0;
+                    charsNeededForm.timeOfSounds = Convert.ToString(timeOfSounds);
+                }
+                if (!double.TryParse(charsNeededForm.timeInMin, out value) || !double.TryParse(charsNeededForm.timeInSec, out value) || !double.TryParse(charsNeededForm.timeOfSounds, out value))
+                {
+                    MessageBox.Show("No Digit");
+                }
+                else
+                {
+                    timeInMin = Convert.ToDouble(charsNeededForm.timeInMin);
+                    timeInSec = Convert.ToDouble(charsNeededForm.timeInSec);
+                    timeOfSounds = Convert.ToDouble(charsNeededForm.timeOfSounds);
+                }
+            }
         }
-
-        public double getTimeInSeconds()
+        private double GetTimeInSeconds()
         {
-            return (m_TimeInMin * 60) + m_TimeInSec - m_TimeOfSounds;
+            return (timeInMin * 60) + timeInSec - timeOfSounds;
         }
-
-        public double getCharsNeeded()
+        private double GetCharsNeeded()
         {
-            return getTimeInSeconds() * factor;
+            return GetTimeInSeconds() * factor;
+        }
+        private void GetResultOfSpeakTime()
+        {
+            double resultSpeakTime = GetTimeInSeconds();
+            if (resultSpeakTime < 0)
+            {
+                charsNeededForm.speakTimeInSeconds = "Error";
+            }
+            else
+            {
+                string speakTime = Convert.ToString(resultSpeakTime);
+                charsNeededForm.speakTimeInSeconds = speakTime;
+            }
+        }
+        private void GetResultOfCharsNeeded()
+        {
+            int resultCharsNeeded = Convert.ToInt32(GetCharsNeeded());
+            if (resultCharsNeeded < 0)
+            {
+                charsNeededForm.numberOfChars = "Error";
+            }
+            else
+            {
+                string resultCharsNeededFullNumber = Convert.ToString(resultCharsNeeded);
+                charsNeededForm.numberOfChars = resultCharsNeededFullNumber;
+            }
+        }
+        public void GetCalculatedChars()
+        {
+            GetTextBoxInputs();
+            GetResultOfSpeakTime();
+            GetResultOfCharsNeeded();
         }
     }
 }
