@@ -42,7 +42,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // textBoxNumberOfChars
+            // stringNumberOfChars
             // 
             this.textBoxNumberOfChars.BackColor = System.Drawing.SystemColors.Info;
             this.textBoxNumberOfChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -107,7 +107,7 @@
             this.labelSpeakTimeInSeconds.TabIndex = 15;
             this.labelSpeakTimeInSeconds.Text = "Sprechzeit:";
             // 
-            // textBoxTimeOfSounds
+            // stringTimeOfSounds
             // 
             this.textBoxTimeOfSounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxTimeOfSounds.Location = new System.Drawing.Point(400, 80);

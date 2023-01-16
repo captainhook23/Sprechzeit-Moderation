@@ -31,7 +31,7 @@ namespace Sprechzeit.Config
         
         public double GetSpeakFlow()
         {
-            double factor = 1.0;
+            double factor = 0.0;
             for (int i = 0; i < configItems.Count; i++)
             {
                 factor = factor + (configItems[i].SpeakFlow); // or equivalently r *= mult[i];

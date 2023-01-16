@@ -61,7 +61,7 @@
             this.labelTimeInSeconds.TabIndex = 1;
             this.labelTimeInSeconds.Text = "Gesamtzeit in Sekunden:";
             // 
-            // textBoxNumberOfChars
+            // stringNumberOfChars
             // 
             this.textBoxNumberOfChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxNumberOfChars.Location = new System.Drawing.Point(400, 20);
@@ -70,7 +70,7 @@
             this.textBoxNumberOfChars.TabIndex = 2;
             this.textBoxNumberOfChars.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxNumberOfChars_KeyDown);
             // 
-            // textBoxTimeOfSounds
+            // stringTimeOfSounds
             // 
             this.textBoxTimeOfSounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxTimeOfSounds.Location = new System.Drawing.Point(400, 80);

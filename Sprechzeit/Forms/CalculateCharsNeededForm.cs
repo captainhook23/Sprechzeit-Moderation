@@ -9,39 +9,31 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace Sprechzeit.Forms
 {
     public partial class CalculateCharsNeededForm : Form
     {
-        public string timeInMin { get; set; }
-        public string timeInSec { get;  set; }
-        public string timeOfSounds { get;  set; }
-        public string speakTimeInSeconds { get; set; }
-        public string numberOfChars { get; set; }
-       
-        CalculateCharsNeeded charsNeeded = new CalculateCharsNeeded();
 
+        double timeInSec;
+        double timeInMin;
+        double timeOfSounds;
         public CalculateCharsNeededForm()
         {
             InitializeComponent();
-            timeInSec = textBoxSumTimeInSec.Text;
-            timeInMin = textBoxSumTimeInMin.Text;
-            timeOfSounds = textBoxTimeOfSounds.Text;
-            speakTimeInSeconds= textBoxSpeakTimeInSeconds.Text;
-            numberOfChars = textBoxNumberOfChars.Text;            
         }
 
         private void buttonCalculateCharsNeeded_Click(object sender, EventArgs e)
         {
-            charsNeeded.GetCalculatedChars();
+            CalculateChars();
         }
 
         private void textBoxTimeOfSounds_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                charsNeeded.GetCalculatedChars();
+                CalculateChars();
             }
         }
 
@@ -49,7 +41,7 @@ namespace Sprechzeit.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                charsNeeded.GetCalculatedChars();
+                CalculateChars();
             }
         }
 
@@ -57,8 +49,73 @@ namespace Sprechzeit.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                charsNeeded.GetCalculatedChars();
+                CalculateChars();
             }
+        }
+
+        private void CheckInput()
+        {
+            double value = 0.0;
+            if (textBoxTimeOfSounds.Text != string.Empty && textBoxSumTimeInMin.Text != string.Empty && textBoxSumTimeInSec.Text != string.Empty)
+            {
+                if (!double.TryParse(textBoxTimeOfSounds.Text, out value) || !double.TryParse(textBoxSumTimeInMin.Text, out value) || !double.TryParse(textBoxSumTimeInSec.Text, out value))
+                {
+                    MessageBox.Show("No Digit");
+                }
+                else
+                {
+                    timeInSec = Convert.ToDouble(textBoxSumTimeInSec.Text);
+                    timeInMin = Convert.ToDouble(textBoxSumTimeInMin.Text);
+                    timeOfSounds = Convert.ToDouble(textBoxTimeOfSounds.Text);
+                }
+            }
+
+            else if (textBoxTimeOfSounds.Text == string.Empty || textBoxSumTimeInMin.Text == string.Empty || textBoxSumTimeInSec.Text == string.Empty)
+            {
+                if (textBoxSumTimeInMin.Text == string.Empty)
+                {
+                    textBoxSumTimeInMin.Text = "0";
+                    timeInMin = Convert.ToDouble(textBoxSumTimeInMin.Text);
+                }
+                if (textBoxSumTimeInSec.Text == string.Empty)
+                {
+                    textBoxSumTimeInSec.Text = "0";
+                    timeInSec = Convert.ToDouble(textBoxSumTimeInSec.Text);
+                }
+                if (textBoxTimeOfSounds.Text == string.Empty)
+                {
+                    textBoxTimeOfSounds.Text = "0";
+                    timeOfSounds = Convert.ToDouble(textBoxTimeOfSounds.Text);
+                }
+                if (!double.TryParse(textBoxTimeOfSounds.Text, out value) || !double.TryParse(textBoxSumTimeInMin.Text, out value) || !double.TryParse(textBoxSumTimeInSec.Text, out value))
+                {
+                    MessageBox.Show("No Digit");
+                }
+                else
+                {
+                    timeInSec = Convert.ToDouble(textBoxSumTimeInSec.Text);
+                    timeInMin = Convert.ToDouble(textBoxSumTimeInMin.Text);
+                    timeOfSounds = Convert.ToDouble(textBoxTimeOfSounds.Text);
+                }
+            }
+        }
+
+        private void DoOutput()
+        {
+            CalculateCharsNeeded calcChar = new CalculateCharsNeeded(timeInMin, timeInSec, timeOfSounds);
+
+            string resultSpeakTime = Convert.ToString(calcChar.getTimeInSeconds());
+            textBoxSpeakTimeInSeconds.Text = resultSpeakTime;
+
+            int resultCharsNeeded = Convert.ToInt32(calcChar.getCharsNeeded());
+            string resultCharsNeededFullNumber = Convert.ToString(resultCharsNeeded);
+            textBoxNumberOfChars.Text = resultCharsNeededFullNumber;
+        }
+
+        public void CalculateChars()
+        {
+            CheckInput();
+            DoOutput();
         }
     }
 }

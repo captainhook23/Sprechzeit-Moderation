@@ -19,8 +19,9 @@ namespace Sprechzeit
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new CalculateTimeBeingUsedForm());
-            //Application.Run(new FactorAlgorythmForm());
-            //Application.Run(new CalculateCharsNeededForm());
+            Application.Run(new CalculateCharsNeededForm());
+            Application.Run(new FactorAlgorythmForm());
+
 
         }
     }
